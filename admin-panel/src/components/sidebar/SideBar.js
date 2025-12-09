@@ -11,27 +11,21 @@ export default function SideBar() {
       <div className="links">
         <NavLink
           to="/"
-          className={(activeLink) =>
-            activeLink.isActive ? "link active" : "link"
-          }
+          className={(activeLink) => (activeLink.isActive ? " active" : "link")}
         >
           <i class="bi bi-house"></i>
           <p>خانه</p>
         </NavLink>
         <NavLink
           to="/profile"
-          className={(activeLink) =>
-            activeLink.isActive ? "link active" : "link"
-          }
+          className={(activeLink) => (activeLink.isActive ? "active" : "link")}
         >
           <i class="bi bi-person"></i>
           <p>پروفایل</p>
         </NavLink>
         <NavLink
           to="/users"
-          className={(activeLink) =>
-            activeLink.isActive ? "link active" : "link"
-          }
+          className={(activeLink) => (activeLink.isActive ? " active" : "link")}
         >
           <i class="bi bi-people"></i>
           <p>کاربران</p>
