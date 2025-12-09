@@ -7,8 +7,10 @@ export default function Header() {
   const parametr = useLocation();
   const showSideBar = useRef(null);
   const settingDiv = useRef(null);
+  
+
   const colors = [
-    { id: 1, color: "#ECEFF1" },
+    { id: 1, color: "#929292ff" },
     { id: 2, color: "#000" },
     { id: 3, color: "#9CCC65" },
     { id: 4, color: "#FFB74D" },
@@ -23,9 +25,15 @@ export default function Header() {
     settingDiv.current.classList.toggle("show-setting-container");
   };
 
-  setInterval(() => {
-    console.log(showSideBar, settingDiv);
-  }, 5000);
+  const changeColorTheme = (event)=>{
+    const {target: t} = event
+    const newVariableColor = t.dataset.color
+    document.documentElement.style.setProperty('--active-link' , newVariableColor)
+  }
+
+
+
+  
   return (
     <div className="header">
       <div className="header-Breadcrumb">
@@ -112,6 +120,7 @@ export default function Header() {
                   style={{
                     background: color.color,
                   }}
+                  onClick={e=> changeColorTheme(e)}
                 ></button>
               ))}
             </div>

@@ -10,7 +10,7 @@
   padding: 10px 25px;
   border: 1px solid rgb(197, 197, 197);
   gap: 40px;
-  background-color: var(--body-color);
+  background-color: var(--eleman-color);
   overflow-y: auto;
   direction: ltr;
 }
@@ -36,18 +36,17 @@
 }
 .link {
   display: flex;
-  font-size: 17px;
   gap: 7px;
   text-decoration: none;
   width: 100%;
   height: 40px;
   /* background-color: red; */
-  display: flex;
+  display: dlex;
   align-items: center;
   padding: 0 10px;
   border-radius: 15px;
   transition: all 0.25s ease;
-  color: var(--main-white-text-color);
+  color: var(--text-color);
   margin-top: 10px;
 }
 .link:hover {
@@ -55,7 +54,7 @@
   color: black;
 }
 .active {
-  isplay: flex;
+  display: flex;
   font-size: 17px;
   gap: 7px;
   text-decoration: none;
@@ -67,8 +66,8 @@
   padding: 0 10px;
   border-radius: 15px;
   transition: all 0.25s ease;
-  background-color: var(--black-color);
-  color: var(--active-text);
+  background-color: var(--active-link);
+  color: #fff;
 }
 .active:hover {
   opacity: 0.7;
