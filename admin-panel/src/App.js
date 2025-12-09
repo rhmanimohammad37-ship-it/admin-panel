@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRoutes } from "react-router-dom";
+import urls from "./routes/routes";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      
-    </div>
-  );
+  const routes = useRoutes(urls);
+
+  return <div className="App">{routes}</div>;
 }
 
 export default App;

@@ -1,0 +1,27 @@
+.home {
+  width: inherit;
+  height: inherit;
+  /* background-color: red; */
+  display: flex;
+  /* gap: 10px; */
+}
+.home-side-bar {
+  width: 18%;
+  height: 100%;
+  /* background-color: blue; */
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.home-content {
+  width: 82%;
+  height: 100%;
+  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

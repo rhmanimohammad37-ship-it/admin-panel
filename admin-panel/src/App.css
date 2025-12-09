@@ -1,38 +1,20 @@
-.App {
-  text-align: center;
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+:root{
+  --black-color: #121313;
+  --body-color: #fff;
+  --card-color: #e5e5e5;
+  --main-white-text-color: #4b4e4f;
+  --active-text: #fff;
+  --hover-color: #dddddd;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{
+  direction: rtl;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App{
+  background-color: var(--body-color);
+  width: 100%;
+  height: 100vh;
 }
