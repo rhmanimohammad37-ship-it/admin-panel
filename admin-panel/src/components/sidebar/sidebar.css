@@ -67,7 +67,7 @@
   border-radius: 15px;
   transition: all 0.25s ease;
   background-color: var(--active-link);
-  color: #fff;
+  color: var(--active-text);
 }
 .active:hover {
   opacity: 0.7;

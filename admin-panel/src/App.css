@@ -6,12 +6,14 @@
   --eleman-color: #efefef;
   --text-color: #000000;
   --secondry-color: #646464;
+  --active-text: #fff;
 }
 *{
   direction: rtl;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: var(--text-color);
 }
 .App{
   background-color: var(--body-color);

@@ -1,13 +1,16 @@
-import { useRef } from "react";
 import { Button, FormControl, CloseButton } from "react-bootstrap";
-import "./header.css";
 import { useLocation, Link, NavLink } from "react-router-dom";
+import useLocalstoeage from "../../customHooc/localstoeage";
+import { useRef } from "react";
+import "./header.css";
 
 export default function Header() {
   const parametr = useLocation();
   const showSideBar = useRef(null);
   const settingDiv = useRef(null);
-  
+  const [set, get] = useLocalstoeage();
+
+  let localColor = get("color");
 
   const colors = [
     { id: 1, color: "#929292ff" },
@@ -16,7 +19,10 @@ export default function Header() {
     { id: 4, color: "#FFB74D" },
     { id: 5, color: "#F06292" },
   ];
-
+  const setColor = () => {
+    document.documentElement.style.setProperty("--active-link", localColor);
+  };
+  setColor();
   const showSideBarFunction = () => {
     showSideBar.current.classList.toggle("show-Side-bar");
   };
@@ -25,15 +31,15 @@ export default function Header() {
     settingDiv.current.classList.toggle("show-setting-container");
   };
 
-  const changeColorTheme = (event)=>{
-    const {target: t} = event
-    const newVariableColor = t.dataset.color
-    document.documentElement.style.setProperty('--active-link' , newVariableColor)
-  }
+  const changeColorTheme = (event) => {
+    const { target } = event;
+    const newVariableColor = target.dataset.color;
+    set("color", newVariableColor);
+    localColor = get("color");
 
+    document.documentElement.style.setProperty("--active-link", localColor);
+  };
 
-
-  
   return (
     <div className="header">
       <div className="header-Breadcrumb">
@@ -54,13 +60,13 @@ export default function Header() {
           className="setting-btn btn btn-outline-secondary"
           onClick={showSettingContainer}
         >
-          <i class="bi bi-gear"></i>
+          <i className="bi bi-gear"></i>
         </Button>
         <Button
           className="list-btn btn btn-outline-secondary"
           onClick={showSideBarFunction}
         >
-          <i class="bi bi-list"></i>
+          <i className="bi bi-list"></i>
         </Button>
       </div>
       <div className="resposive-side-bar" ref={showSideBar}>
@@ -120,19 +126,9 @@ export default function Header() {
                   style={{
                     background: color.color,
                   }}
-                  onClick={e=> changeColorTheme(e)}
+                  onClick={(e) => changeColorTheme(e)}
                 ></button>
               ))}
-            </div>
-          </div>
-          <div className="web-theme">
-            <div>
-              <h5 className="web-theme-title">حالت نمایش</h5>
-            </div>
-            <div className="theme-btns">
-              <button className="theme-btn">روشن</button>
-              <button className="theme-btn">شیشه ای</button>
-              <button className="theme-btn">تاریک</button>
             </div>
           </div>
         </div>
