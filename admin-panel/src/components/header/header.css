@@ -84,6 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 .responsive-slide-bar-child {
   width: 100%;
@@ -97,7 +98,7 @@
   gap: 10px;
   direction:  ltr;
   overflow-y: auto;
-
+  z-index: 1000;
 }
 .header-links {
   width: 100%;
@@ -154,6 +155,8 @@
   visibility: hidden;
   transform: translateX(-10px);
   padding: 10px;
+  z-index: 1000;
+  isolation: isolate;
 }
 .show-setting-container {
   visibility: visible;
@@ -170,6 +173,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  z-index: 1000;
 }
 .close {
   width: 100%;
