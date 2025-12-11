@@ -39,16 +39,16 @@ export default function Header() {
 
     document.documentElement.style.setProperty("--active-link", localColor);
   };
-
+  console.log(parametr);
   return (
     <div className="header">
       <div className="header-Breadcrumb">
         <ul>
           <li>dasboard</li>
           <li>
-            <Link to={`/`}>
+            <Link to={`${parametr.pathname}`}>
               {parametr.pathname.slice(1, parametr.pathname.length)
-                ? ""
+                ? parametr.pathname.slice(1, parametr.pathname.length)
                 : "home"}
             </Link>
           </li>
