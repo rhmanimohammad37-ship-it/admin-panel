@@ -37,15 +37,24 @@ export default function Home() {
       data: [100, 600, 300, 500, 300, 450, 185, 550, 440, 230, 250, 120],
       xAxis: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       label: "فروش  ماهیانه",
-      color: "#1a5da0ff",
-      update: '3روز قبل'
+      color: "#50ab50ff",
+      update: "3روز قبل",
     },
     {
       data: [75, 30, 35, 50, 100, 85, 25],
       xAxis: [1, 2, 3, 4, 5, 6, 7],
       label: "فروش هفتگی",
-      color: "#2b8d7bff",
-      update: '1ساعت پیش'
+      color: "#36e6e6ff",
+      update: "1ساعت پیش",
+    },
+  ];
+  const barChartArry = [
+    {
+      data: [75, 30, 35, 50, 100, 85, 25],
+      xAxis: [1, 2, 3, 4, 5, 6, 7],
+      label: "کابران جدید ",
+      color: "#679d60ff",
+      update: "2 روز قبل",
     },
   ];
   return (
@@ -66,7 +75,7 @@ export default function Home() {
           {chartsArray.map((chart) => (
             <LineChartComponent {...chart} />
           ))}
-          <BarChartComponent {...chartsArray[0]}/>
+          <BarChartComponent {...barChartArry[0]} />
         </section>
       </div>
     </div>
