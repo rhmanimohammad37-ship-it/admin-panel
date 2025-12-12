@@ -1,45 +1,54 @@
-import { Button, FormControl, CloseButton } from "react-bootstrap";
+import { Button, FormControl } from "react-bootstrap";
 import { useLocation, Link, NavLink } from "react-router-dom";
 import useLocalstoeage from "../../customHooc/localstoeage";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./header.css";
 
 export default function Header() {
   const parametr = useLocation();
   const showSideBar = useRef(null);
-  const settingDiv = useRef(null);
-  const [set, get] = useLocalstoeage();
+  const [lightTheme, setLightTheme] = useState(true);
+  const [themeBtn, setThemeBtn] = useState(true);
+  const [setData, getData] = useLocalstoeage();
 
-  let localColor = get("color");
-
-  const colors = [
-    { id: 1, color: "#929292ff" },
-    { id: 2, color: "#000" },
-    { id: 3, color: "#9CCC65" },
-    { id: 4, color: "#FFB74D" },
-    { id: 5, color: "#F06292" },
-  ];
-  const setColor = () => {
-    document.documentElement.style.setProperty("--active-link", localColor);
-  };
-  setColor();
   const showSideBarFunction = () => {
     showSideBar.current.classList.toggle("show-Side-bar");
   };
 
-  const showSettingContainer = () => {
-    settingDiv.current.classList.toggle("show-setting-container");
+  let newLightTheme = getData("hasLight");
+
+  if (newLightTheme) {
+    document.documentElement.style.setProperty("--active-link", "#000");
+    document.documentElement.style.setProperty("--body-color", "#fff");
+    document.documentElement.style.setProperty("--eleman-color", "#efefef");
+    document.documentElement.style.setProperty("--text-color", "#000");
+    document.documentElement.style.setProperty("--active-text", "#fff");
+  } else {
+    document.documentElement.style.setProperty("--active-link", "#fff");
+    document.documentElement.style.setProperty("--body-color", "#000000ff");
+    document.documentElement.style.setProperty("--eleman-color", "#151515ff");
+    document.documentElement.style.setProperty("--text-color", "#fff");
+    document.documentElement.style.setProperty("--active-text", "#000000ff");
+  }
+
+  const changeTheme = (event) => {
+    if (lightTheme) {
+      document.documentElement.style.setProperty("--active-link", "#fff");
+      document.documentElement.style.setProperty("--body-color", "#000000ff");
+      document.documentElement.style.setProperty("--eleman-color", "#151515ff");
+      document.documentElement.style.setProperty("--text-color", "#fff");
+      document.documentElement.style.setProperty("--active-text", "#000000");
+    } else {
+      document.documentElement.style.setProperty("--active-link", "#000");
+      document.documentElement.style.setProperty("--body-color", "#fff");
+      document.documentElement.style.setProperty("--eleman-color", "#efefef");
+      document.documentElement.style.setProperty("--text-color", "#000");
+      document.documentElement.style.setProperty("--active-text", "#fff");
+    }
+    setData("hasLight", lightTheme);
+    setLightTheme(!lightTheme);
   };
 
-  const changeColorTheme = (event) => {
-    const { target } = event;
-    const newVariableColor = target.dataset.color;
-    set("color", newVariableColor);
-    localColor = get("color");
-
-    document.documentElement.style.setProperty("--active-link", localColor);
-  };
-  console.log(parametr);
   return (
     <div className="header">
       <div className="header-Breadcrumb">
@@ -57,10 +66,14 @@ export default function Header() {
       <div className="header-access">
         <FormControl placeholder="search" className="search-input" />
         <Button
-          className="setting-btn btn btn-outline-secondary"
-          onClick={showSettingContainer}
+          className="set-theme-btn btn btn-outline-secondary"
+          onClick={(e) => changeTheme(e)}
         >
-          <i className="bi bi-gear"></i>
+          {lightTheme ? (
+            <i className="bi bi-brightness-high"></i>
+          ) : (
+            <i className="bi bi-moon"></i>
+          )}
         </Button>
         <Button
           className="list-btn btn btn-outline-secondary"
@@ -103,33 +116,6 @@ export default function Header() {
             <Link to="/users" className={"header-link"}>
               ورود
             </Link>
-          </div>
-        </div>
-      </div>
-
-      <div className="setting-container" ref={settingDiv}>
-        <div className="setting-container-child">
-          <div className="close">
-            <h5 className="setting-title">تنظیمات وب</h5>
-            <CloseButton onClick={showSettingContainer} />
-          </div>
-          <div className="color-btn">
-            <div>
-              <h5 className="color-title">رنگ تم رو انتخاب کن</h5>
-            </div>
-            <div className="color-buttons">
-              {colors.map((color) => (
-                <button
-                  key={color.id}
-                  className="color-button"
-                  data-color={color.color}
-                  style={{
-                    background: color.color,
-                  }}
-                  onClick={(e) => changeColorTheme(e)}
-                ></button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
