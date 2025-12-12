@@ -6,9 +6,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  /* background-color: rgba(75, 75, 75, 0.138); */
   border-radius: 15px;
   backdrop-filter: blur(15px);
+  position: relative;
+  z-index: 100;
 }
 
 .header-Breadcrumb {
@@ -34,7 +35,6 @@
 .header-access {
   width: 50%;
   height: 100%;
-  /* background-color: red; */
   display: flex;
   align-items: center;
   justify-content: end;
@@ -69,6 +69,25 @@
   color: var(--text-color);
 }
 
+/* Backdrop برای overlay */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
 .resposive-side-bar {
   position: fixed;
   top: 0;
@@ -78,9 +97,8 @@
   transition: all 0.5s ease;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(10px);
+  transform: translateX(100%);
   padding: 10px;
-  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,9 +114,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  direction:  ltr;
+  direction: ltr;
   overflow-y: auto;
-  z-index: 1000;
 }
 .header-links {
   width: 100%;
@@ -116,7 +133,6 @@
 .active-link {
   width: 100%;
   height: 35px;
-  /* background-color: red; */
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -138,7 +154,25 @@
   opacity: 0.7;
 }
 .show-Side-bar {
-  transform: translateX(0px);
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.setting-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.setting-backdrop.show {
   opacity: 1;
   visibility: visible;
 }
@@ -149,19 +183,17 @@
   position: fixed;
   top: 0;
   left: 0;
-  /* background-color: red; */
   transition: all 0.5s ease;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-10px);
+  transform: translateX(-100%);
   padding: 10px;
   z-index: 1000;
-  isolation: isolate;
 }
 .show-setting-container {
   visibility: visible;
   opacity: 1;
-  transform: translateX(0px);
+  transform: translateX(0);
 }
 .setting-container-child {
   width: 100%;
@@ -173,7 +205,6 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  z-index: 1000;
 }
 .close {
   width: 100%;
@@ -201,9 +232,14 @@
   height: 20px;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.color-button:hover {
+  transform: scale(1.1);
 }
 
-/* reaposive */
+/* responsive */
 @media (min-width: 1040px) {
   .resposive-side-bar {
     opacity: 0;
@@ -228,7 +264,7 @@
   }
   .setting-title,
   .color-title,
-  .web-theme-title{
+  .web-theme-title {
     font-size: 10px;
   }
 }
