@@ -8,7 +8,6 @@ export default function Header() {
   const parametr = useLocation();
   const showSideBar = useRef(null);
   const [lightTheme, setLightTheme] = useState(true);
-  const [themeBtn, setThemeBtn] = useState(true);
   const [setData, getData] = useLocalstoeage();
 
   const showSideBarFunction = () => {
