@@ -2,6 +2,8 @@ import "./home.css";
 import SideBar from "../../components/sidebar/SideBar";
 import Header from "../../components/header/Header";
 import Card from "../../components/card/card";
+import LineChartComponent from "../../components/lineChart/LineChart";
+import BarChartComponent from "../../components/bar-chart/barChart";
 
 export default function Home() {
   const cardArrauInfo = [
@@ -30,6 +32,22 @@ export default function Home() {
       description: "+23%",
     },
   ];
+  const chartsArray = [
+    {
+      data: [100, 600, 300, 500, 300, 450, 185, 550, 440, 230, 250, 120],
+      xAxis: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: "فروش  ماهیانه",
+      color: "#1a5da0ff",
+      update: '3روز قبل'
+    },
+    {
+      data: [75, 30, 35, 50, 100, 85, 25],
+      xAxis: [1, 2, 3, 4, 5, 6, 7],
+      label: "فروش هفتگی",
+      color: "#2b8d7bff",
+      update: '1ساعت پیش'
+    },
+  ];
   return (
     <div className="home">
       <div className="home-side-bar">
@@ -41,8 +59,14 @@ export default function Home() {
         </header>
         <section className="cards">
           {cardArrauInfo.map((cardData) => (
-            <Card {...cardData} key={cardData.id}/>
+            <Card {...cardData} key={cardData.id} />
           ))}
+        </section>
+        <section className="charts">
+          {chartsArray.map((chart) => (
+            <LineChartComponent {...chart} />
+          ))}
+          <BarChartComponent {...chartsArray[0]}/>
         </section>
       </div>
     </div>
