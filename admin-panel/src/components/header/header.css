@@ -1,15 +1,17 @@
 .header {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: inherit;
+  /* background-color: red; */
   top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
   border-radius: 15px;
-  backdrop-filter: blur(15px);
-  position: relative;
+  backdrop-filter: blur(5px);
+  position: fixed;
   z-index: 100;
+  border: 1px solid rgb(220 , 200 , 220);
 }
 
 .header-Breadcrumb {
@@ -44,6 +46,7 @@
   width: 40%;
   box-shadow: none;
   background-color: var(--eleman-color);
+  /* display: none; */
 }
 .search-input:focus {
   box-shadow: none;
@@ -92,18 +95,19 @@
 .resposive-side-bar {
   position: fixed;
   top: 0;
-  right: 0;
+  right: 0px;
   width: 30%;
   height: 100vh;
   transition: all 0.5s ease;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(100%);
+  transform: translateX(15%);
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  background-color: red;
 }
 .responsive-slide-bar-child {
   width: 100%;

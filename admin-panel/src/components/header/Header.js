@@ -1,7 +1,7 @@
 import { Button, FormControl } from "react-bootstrap";
 import { useLocation, Link, NavLink } from "react-router-dom";
 import useLocalstoeage from "../../customHooc/localstoeage";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./header.css";
 
 export default function Header() {
@@ -14,39 +14,48 @@ export default function Header() {
     showSideBar.current.classList.toggle("show-Side-bar");
   };
 
-  let newLightTheme = getData("hasLight");
-
-  if (newLightTheme) {
-    document.documentElement.style.setProperty("--active-link", "#000");
-    document.documentElement.style.setProperty("--body-color", "#fff");
-    document.documentElement.style.setProperty("--eleman-color", "#efefef");
-    document.documentElement.style.setProperty("--text-color", "#000");
-    document.documentElement.style.setProperty("--active-text", "#fff");
-  } else {
-    document.documentElement.style.setProperty("--active-link", "#fff");
-    document.documentElement.style.setProperty("--body-color", "#000000ff");
-    document.documentElement.style.setProperty("--eleman-color", "#151515ff");
-    document.documentElement.style.setProperty("--text-color", "#fff");
-    document.documentElement.style.setProperty("--active-text", "#000000ff");
-  }
-
-  const changeTheme = (event) => {
-    if (lightTheme) {
-      document.documentElement.style.setProperty("--active-link", "#fff");
-      document.documentElement.style.setProperty("--body-color", "#000000ff");
-      document.documentElement.style.setProperty("--eleman-color", "#151515ff");
-      document.documentElement.style.setProperty("--text-color", "#fff");
-      document.documentElement.style.setProperty("--active-text", "#000000");
-    } else {
+  useEffect(() => {
+    let newLightTheme = getData("hasLight");
+    setLightTheme(newLightTheme)
+    if (newLightTheme) {
       document.documentElement.style.setProperty("--active-link", "#000");
       document.documentElement.style.setProperty("--body-color", "#fff");
       document.documentElement.style.setProperty("--eleman-color", "#efefef");
       document.documentElement.style.setProperty("--text-color", "#000");
       document.documentElement.style.setProperty("--active-text", "#fff");
+    } else {
+      document.documentElement.style.setProperty("--active-link", "#fff");
+      document.documentElement.style.setProperty("--body-color", "#000000ff");
+      document.documentElement.style.setProperty("--eleman-color", "#151515ff");
+      document.documentElement.style.setProperty("--text-color", "#fff");
+      document.documentElement.style.setProperty("--active-text", "#000000ff");
     }
-    setData("hasLight", lightTheme);
-    setLightTheme(!lightTheme);
+    console.log("component created");
+    
+  }, []);
+
+  const changeTheme = () => {
+    setLightTheme(prev => !prev);
   };
+
+  // تغییر CSS + ذخیره در localStorage
+  useEffect(() => {
+    if (lightTheme) {
+      document.documentElement.style.setProperty("--active-link", "#000");
+      document.documentElement.style.setProperty("--body-color", "#fff");
+      document.documentElement.style.setProperty("--eleman-color", "#efefef");
+      document.documentElement.style.setProperty("--text-color", "#000");
+      document.documentElement.style.setProperty("--active-text", "#fff");
+    } else {
+      document.documentElement.style.setProperty("--active-link", "#fff");
+      document.documentElement.style.setProperty("--body-color", "#000000ff");
+      document.documentElement.style.setProperty("--eleman-color", "#151515ff");
+      document.documentElement.style.setProperty("--text-color", "#fff");
+      document.documentElement.style.setProperty("--active-text", "#000000");
+    }
+
+    setData("hasLight", lightTheme);
+  }, [lightTheme, setData]);
 
   return (
     <div className="header">
@@ -69,9 +78,9 @@ export default function Header() {
           onClick={(e) => changeTheme(e)}
         >
           {lightTheme ? (
-            <i className="bi bi-brightness-high"></i>
-          ) : (
             <i className="bi bi-moon"></i>
+          ) : (
+            <i className="bi bi-brightness-high"></i>
           )}
         </Button>
         <Button

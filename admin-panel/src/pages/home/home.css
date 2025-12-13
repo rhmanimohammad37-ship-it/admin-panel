@@ -27,6 +27,9 @@ header {
   width: 100%;
   height: 60px;
   flex-shrink: 0; /* جلوگیری از فشرده شدن */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cards {
@@ -140,6 +143,13 @@ header {
     gap: 30px;
   }
 }
+
+
+@media (max-width: 1140px) {
+  
+}
+
+
 
 @media (max-width: 576px) {
   .cards {
