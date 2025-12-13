@@ -107,7 +107,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  background-color: red;
+  /* background-color: red; */
 }
 .responsive-slide-bar-child {
   width: 100%;
@@ -193,5 +193,11 @@
 @media (max-width: 1140px) {
   .list-btn {
     display: block;
+  }
+}
+
+@media (max-width: 1040px) {
+  .header{
+    width: 95%;
   }
 }
