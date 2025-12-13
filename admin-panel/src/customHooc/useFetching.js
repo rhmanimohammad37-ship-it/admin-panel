@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
+
 export default function useFetching(apiAddres) {
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await fetch(apiAddres);
       if (response.ok) {
-        const parsData = response.json();
+        const parsData = await response.json();
         setData(() => parsData);
       }
     } catch (error) {
@@ -15,9 +16,10 @@ export default function useFetching(apiAddres) {
     } finally {
       setIsLoading(false);
     }
-  };
-  fetchData();
+  }, [apiAddres]);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
   return [data, error, isLoading];
-  
 }

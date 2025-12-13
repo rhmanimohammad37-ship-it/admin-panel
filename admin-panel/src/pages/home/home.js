@@ -4,6 +4,8 @@ import Header from "../../components/header/Header";
 import Card from "../../components/card/card";
 import LineChartComponent from "../../components/lineChart/LineChart";
 import BarChartComponent from "../../components/bar-chart/barChart";
+import { Spinner, Table } from "react-bootstrap";
+import useFetching from "../../customHooc/useFetching";
 
 export default function Home() {
   const cardArrauInfo = [
@@ -32,31 +34,17 @@ export default function Home() {
       description: "+23%",
     },
   ];
-  const chartsArray = [
-    {
-      data: [100, 600, 300, 500, 300, 450, 185, 550, 440, 230, 250, 120],
-      xAxis: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      label: "فروش  ماهیانه",
-      color: "#50ab50ff",
-      update: "3روز قبل",
-    },
-    {
-      data: [75, 30, 35, 50, 100, 85, 25],
-      xAxis: [1, 2, 3, 4, 5, 6, 7],
-      label: "فروش هفتگی",
-      color: "#36e6e6ff",
-      update: "1ساعت پیش",
-    },
-  ];
-  const barChartArry = [
-    {
-      data: [75, 30, 35, 50, 100, 85, 25],
-      xAxis: [1, 2, 3, 4, 5, 6, 7],
-      label: "کابران جدید ",
-      color: "#679d60ff",
-      update: "2 روز قبل",
-    },
-  ];
+  const [chartData, chartError] = useFetching(
+    "https://admin-panel-d45dd-default-rtdb.firebaseio.com/performance.json"
+  );
+
+  const [commentData, commentError, commentLoading] = useFetching(
+    "https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json"
+  );
+  const [userData, userError, userLoading] = useFetching(
+    "https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json"
+  );
+
   return (
     <div className="home">
       <div className="home-side-bar">
@@ -72,10 +60,52 @@ export default function Home() {
           ))}
         </section>
         <section className="charts">
-          {chartsArray.map((chart) => (
-            <LineChartComponent {...chart} />
-          ))}
-          <BarChartComponent {...barChartArry[0]} />
+          {chartData.length && (
+            <>
+              <LineChartComponent {...chartData[0]} key={chartData[0].id} />
+              <LineChartComponent {...chartData[1]} key={chartData[1].id} />
+              <BarChartComponent {...chartData[2]} key={chartData[2].id} />
+            </>
+          )}
+          {chartError && alert(`${chartError} in performance `)}
+        </section>
+        <section className="show-web-data">
+          <div className="all-users">
+            <Table responsive hover className="table">
+              <thead>
+                <tr className="heade-row">
+                  <th>نام</th>
+                  <th>نام کاربری</th>
+                  <th>ایمیل</th>
+                </tr>
+              </thead>
+              <tbody className="table-body">
+                {userLoading && <Spinner />}
+                {userError&& alert(`${userError} in show users`)}
+                {userData.length && userData.map(data => (
+                  <tr key={data.id}>
+                    <td>{data.fullName}</td>
+                    <td>{data.username}</td>
+                    <td>{data.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+          <div className="user-comments">
+            {commentLoading && <Spinner />}
+            {commentError && alert(`${commentError} in comment section`)}
+            {commentData.length &&
+              commentData.map((comment) => (
+                <div className="comment" key={comment.id}>
+                  <div className="comment-date">
+                    <div className="date-email">{comment.email}</div>
+                    <div className="date-history">{comment.date}</div>
+                  </div>
+                  <div className="comment-data">{comment.text}</div>
+                </div>
+              ))}
+          </div>
         </section>
       </div>
     </div>

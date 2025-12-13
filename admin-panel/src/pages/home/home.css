@@ -1,16 +1,12 @@
 .home {
-  width: inherit;
-  height: inherit;
-  /* background-color: red; */
+  width: 100%;
+  height: 100vh; /* تغییر از inherit به 100vh */
   display: flex;
-  /* gap: 10px; */
-  z-index: -2;
 }
+
 .home-side-bar {
   width: 18%;
   height: 100%;
-  /* background-color: blue; */
-  /* position: relative; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,45 +15,109 @@
 
 .home-content {
   width: 82%;
-  height: 100%;
-  /* background-color: red; */
+  min-height: 100vh; /* تغییر از height به min-height */
   display: flex;
   flex-direction: column;
-  /* padding: 10px; */
   overflow-y: auto;
   overflow-x: hidden;
+  padding: 10px; /* اضافه کردن padding */
 }
+
 header {
   width: 100%;
   height: 60px;
-  /* background-color: red; */
-  
+  flex-shrink: 0; /* جلوگیری از فشرده شدن */
 }
+
 .cards {
   width: 100%;
   height: auto;
-  /* background-color: red; */
   margin-top: 25px;
   display: grid;
-  align-items: center;
-  justify-content: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  padding: 0 10px;
+  flex-shrink: 0; /* جلوگیری از فشرده شدن */
 }
+
 .charts {
   width: 100%;
   height: auto;
   margin-top: 30px;
+  margin-bottom: 30px; /* اضافه کردن margin-bottom */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  flex-shrink: 0; /* جلوگیری از فشرده شدن */
+}
+.show-web-data {
+  width: 100%;
+  height: auto;
   /* background-color: red; */
-  z-index: 1;
+  flex-shrink: 0; /* جلوگیری از فشرده شدن */
   display: grid;
   align-items: center;
   justify-content: center;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 10px;
-  padding: 0px 10px;
+  /* padding: 0 10px; */
 }
+.all-users{
+  height: 350px;
+  border-radius: 15px;
+  background-color: var(--eleman-color);
+  border: 1px solid rgb(220, 220, 220);
+  overflow-x: hidden;
+}
+.table{
+  background-color: var(--eleman-color);
+}
+.user-comments {
+  background-color: var(--eleman-color);
+  border-radius: 15px;
+  display: flex;
+  height: 350px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid rgb(220, 220, 220);
+  gap: 8px;
+  padding: 10px;
+}
+.comment{
+  width: 100%;
+  height: 60px;
+  background-color: ;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  border-radius: 15px;
+  padding: 5px 8px;
+  border: 1px solid rgb(220, 220, 220);
+  transition: all 0.25s ease;
+}
+.comment-date{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.comment:hover{
+  transform: scale(1.05);
+}
+
+.heade-row th{
+  background-color: var(--eleman-color);
+  color: var(--text-color);
+  /* font-size: 5px; */
+}
+.table-body tr td{
+  background-color: var(--eleman-color);
+  color: var(--text-color);
+}
+
+
+
+
 
 @media (max-width: 1140px) {
   .home-side-bar {
@@ -65,16 +125,19 @@ header {
   }
   .home-content {
     width: 100%;
-    height: 100%;
+    padding: 10px; /* اضافه کردن padding */
   }
 }
-
 @media (max-width: 992px) {
   .cards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .charts{
-    grid-template-columns: 1fr 1fr;
+  .charts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .show-web-data{
+    grid-template-columns: repeat(1 , 1fr);
+    gap: 30px;
   }
 }
 
@@ -82,7 +145,7 @@ header {
   .cards {
     grid-template-columns: 1fr;
   }
-  .charts{
-    grid-template-columns: 1fr ;
+  .charts {
+    grid-template-columns: 1fr;
   }
 }
