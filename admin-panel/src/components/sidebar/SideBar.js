@@ -29,13 +29,8 @@ export default function SideBar() {
         </NavLink>
       </div>
       <div className="login">
-        <h5 className="login-title">ثبت نام در سایت</h5>
-        <NavLink to="/sing-in" className={"link"}>
-          ثبت نام
-        </NavLink>
-        <NavLink to="/sing-up" className={"link"}>
-        ورود
-        </NavLink>
+        <h5 className="login-title">دسترسی های حساب</h5>
+        <button className="logout-btn">خروج از حساب</button>
       </div>
     </div>
   );

@@ -117,13 +117,10 @@ export default function Header() {
             >
               کاربران
             </NavLink>
-            <h4>ثبت نام در سایت</h4>
-            <Link to="/users" className={"header-link"}>
-              ثبت نام
-            </Link>
-            <Link to="/users" className={"header-link"}>
-              ورود
-            </Link>
+            <h4>اطلاعات حساب</h4>
+            <button className="logout-btn">
+              خروج از حساب
+            </button>
           </div>
         </div>
       </div>

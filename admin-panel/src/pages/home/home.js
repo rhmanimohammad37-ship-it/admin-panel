@@ -60,14 +60,14 @@ export default function Home() {
           ))}
         </section>
         <section className="charts">
-          {chartData.length && (
+          {chartData.length !== 0 && (
             <>
               <LineChartComponent {...chartData[0]} key={chartData[0].id} />
               <LineChartComponent {...chartData[1]} key={chartData[1].id} />
               <BarChartComponent {...chartData[2]} key={chartData[2].id} />
             </>
           )}
-          {chartError && alert(`${chartError} in performance `)}
+          {chartError.length !== 0 && alert(`${chartError} in performance `)}
         </section>
         <section className="show-web-data">
           <div className="all-users">
@@ -80,22 +80,24 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody className="table-body">
-                {userLoading && <Spinner />}
-                {userError&& alert(`${userError} in show users`)}
-                {userData.length && userData.map(data => (
-                  <tr key={data.id}>
-                    <td>{data.fullName}</td>
-                    <td>{data.username}</td>
-                    <td>{data.email}</td>
-                  </tr>
-                ))}
+                {userLoading === true && <Spinner />}
+                {userError === true && alert(`${userError} in show users`)}
+                {userData.length !== 0 &&
+                  userData.map((data) => (
+                    <tr key={data.id}>
+                      <td>{data.fullName}</td>
+                      <td>{data.username}</td>
+                      <td>{data.email}</td>
+                    </tr>
+                  ))}
               </tbody>
             </Table>
           </div>
           <div className="user-comments">
-            {commentLoading && <Spinner />}
-            {commentError && alert(`${commentError} in comment section`)}
-            {commentData.length &&
+            {commentLoading === true && <Spinner />}
+            {commentError.length !== 0 &&
+              alert(`${commentError} in comment section`)}
+            {commentData.length !== 0 &&
               commentData.map((comment) => (
                 <div className="comment" key={comment.id}>
                   <div className="comment-date">
