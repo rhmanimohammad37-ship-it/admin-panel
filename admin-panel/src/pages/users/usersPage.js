@@ -3,37 +3,128 @@ import Header from "../../components/header/Header";
 import useFetching from "../../customHooc/useFetching";
 import "./userpage.css";
 import { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Alert } from "react-bootstrap";
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
-  const [comments, setcomments] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [usersData, usersError, usersLoading] = useFetching(
-    `https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json`
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
 
-  const [commentsData, commentsError, commentsLoading] = useFetching(
-    `https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json`
-  );
+        const [userResponse, commentsResponse] = await Promise.all([
+          fetch(
+            "https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json"
+          ),
+          fetch(
+            "https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json"
+          ),
+        ]);
 
-  useEffect(async () => {
-    try {
-      const userResponse = await fetch(
-        "https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json"
-      );
-      const commentsResponse = (Response = await fetch(
-        "https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json"
-      ));
-      if (commentsResponse.ok && userResponse.ok) {
+        if (!userResponse.ok || !commentsResponse.ok) {
+          throw new Error(
+            `خطا در دریافت اطلاعات: ${userResponse.status} - ${commentsResponse.status}`
+          );
+        }
+
         const parsUsers = await userResponse.json();
         const parsComments = await commentsResponse.json();
-        setUsers(Object.values(parsUsers))
-        setcomments(Object.values(parsComments))
+
+        // تبدیل به آرایه و اضافه کردن id
+        const usersArray = parsUsers
+          ? Object.entries(parsUsers).map(([key, value]) => ({
+              id: key,
+              ...value,
+            }))
+          : [];
+
+        const commentsArray = parsComments
+          ? Object.entries(parsComments).map(([key, value]) => ({
+              id: key,
+              ...value,
+            }))
+          : [];
+
+        setUsers(usersArray);
+        setComments(commentsArray);
+        setError(null);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {}
-  }, []);
-  console.log(commentsData);
+    };
+
+    fetchData();
+  }, []); // فقط یک بار هنگام mount اجرا می‌شود
+
+  // تابع برای حذف کاربر
+  const handleDeleteUser = (userId) => {
+    if (window.confirm("آیا از حذف این کاربر اطمینان دارید؟")) {
+      setUsers(users.filter((user) => user.id !== userId));
+    }
+  };
+
+  // تابع برای حذف کامنت
+  const handleDeleteComment = (commentId) => {
+    if (window.confirm("آیا از حذف این نظر اطمینان دارید؟")) {
+      setComments(comments.filter((comment) => comment.id !== commentId));
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="users-page">
+        <div className="users-page-side-bar">
+          <SideBar />
+        </div>
+        <div className="users-page-content">
+          <header>
+            <Header />
+          </header>
+          <div className="loading-container">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">در حال بارگذاری...</span>
+            </Spinner>
+            <p>در حال بارگذاری اطلاعات...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="users-page">
+        <div className="users-page-side-bar">
+          <SideBar />
+        </div>
+        <div className="users-page-content">
+          <header>
+            <Header />
+          </header>
+          <div className="error-container">
+            <Alert variant="danger">
+              <Alert.Heading>خطا در دریافت اطلاعات</Alert.Heading>
+              <p>{error}</p>
+              <button
+                className="btn btn-primary mt-2"
+                onClick={() => window.location.reload()}
+              >
+                تلاش مجدد
+              </button>
+            </Alert>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="users-page">
       <div className="users-page-side-bar">
@@ -44,56 +135,62 @@ export default function UsersPage() {
           <Header />
         </header>
         <div className="show-users-info">
+          {/* بخش کاربران */}
           <div className="user-table">
             <div className="user-title">
-              <h3>کاربران</h3>
+              <h3>کاربران ({users.length})</h3>
             </div>
             <div className="user-info">
-              {usersError === true && alert(usersError)}
-              {usersLoading === true && <Spinner />}
-              {users.length !== 0 && 
-                users.map(user=>(
-                  <div className="data">
+              {users.length === 0 ? (
+                <div className="no-data">
+                  <p>هیچ کاربری یافت نشد</p>
+                </div>
+              ) : (
+                users.map((user) => (
+                  <div className="data" key={user.id}>
                     <div className="full-name">
-                      {`${user.fName} ${user.lName}`}
+                      {`${user.fName || ""} ${user.lName || ""}`.trim() ||
+                        "نامشخص"}
                     </div>
-                    <div className="email">{user.email}</div>
-                    <div className="password">{user.password}</div>
-                    <div className="edit">
-                      <button className="edit-btn">
-                        <i class="bi bi-pencil-square"></i>
-                      </button>
-                      <button className="remove-btn">
-                        <i class="bi bi-trash3"></i>
-                      </button>
+                    <div className="email">{user.email || "ایمیل ندارد"}</div>
+                    <div className="password">
+                      {user.password ? user.password : "بدون رمز"}
                     </div>
                   </div>
                 ))
-              }
-
-              {/* {users[1].length !== 0 &&
-                usersData[1].map((user) => (
-                  
-                ))} */}
+              )}
             </div>
           </div>
+
+          {/* بخش کامنت‌ها */}
           <div className="comment-table">
             <div className="user-title">
-              <h3>کامنت ها</h3>
+              <h3>کامنت‌ها ({comments.length})</h3>
             </div>
             <div className="user-info">
-              {commentsError === true && alert(usersError)}
-              {commentsLoading === true && <Spinner />}
-              {comments.length !== 0 &&
+              {comments.length === 0 ? (
+                <div className="no-data">
+                  <p>هیچ کامنتی یافت نشد</p>
+                </div>
+              ) : (
                 comments.map((comment) => (
-                  <div className="comments">
+                  <div className="comments" key={comment.id}>
                     <div className="comments-date">
-                        <div>{comment.email}</div>
-                        <div>{comment.date}</div>
+                      <div>{comment.email || "ناشناس"}</div>
+                      <div>{comment.date || "تاریخ نامعلوم"}</div>
                     </div>
-                    <div className="comments-info">{comment.text}</div>
+                    <div className="comments-info">
+                      {comment.text || "بدون متن"}
+                    </div>
+                    <div className="comment-actions">
+                      <button
+                        className="remove-btn"
+                        onClick={() => handleDeleteComment(comment.id)}
+                      ></button>
+                    </div>
                   </div>
-                ))}
+                ))
+              )}
             </div>
           </div>
         </div>
