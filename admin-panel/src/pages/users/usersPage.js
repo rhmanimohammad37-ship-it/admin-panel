@@ -136,7 +136,12 @@ export default function UsersPage() {
         </header>
         <div className="show-users-info">
           {/* بخش کاربران */}
-          <div className="user-table">
+          <div className="user-table"
+            style={{
+              overflowX: 'hidden',
+              overflow: 'auto'
+             }}
+            >
             <div className="user-title">
               <h3>کاربران ({users.length})</h3>
             </div>
