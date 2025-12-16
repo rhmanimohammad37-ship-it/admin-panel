@@ -1,10 +1,36 @@
-import Header from "../../components/header/Header";
+import useLocalstoeage from "../../customHooc/localstoeage";
 import SideBar from "../../components/sidebar/SideBar";
-import React from "react";
-import { Button, FormControl } from "react-bootstrap";
+import Header from "../../components/header/Header";
+import { FormControl } from "react-bootstrap";
+import useFetching from "../../customHooc/useFetching";
+import { useState, useEffect } from "react";
 import "./profile.css";
 
 export default function Profile() {
+  const [set, get] = useLocalstoeage();
+  const [mainUser, setMainUser] = useState({});
+
+  const userKey = get("user-key");
+  useEffect(async () => {
+    try {
+      const response = await fetch(
+        "https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json"
+      );
+      if (response.ok) {
+        const data = await response.json();
+        const newData = Object.values(data);
+        const findeUser = newData.find((user) => {
+          return user.id === userKey;
+        });
+        console.log(findeUser);
+        setMainUser(() => findeUser);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  }, []);
+  console.log(mainUser.fName);
+
   return (
     <div className="profile-pages">
       <div className="profile-page-side-bar">
@@ -24,20 +50,23 @@ export default function Profile() {
                 />
               </div>
               <div className="user-information">
-                <h3>محمد رحمانی</h3>
-                <p>mohammadrhmany128@gmail.com</p>
+                <h3>{`${mainUser.fName} ${mainUser.lName}`}</h3>
+                <p>{mainUser.email}</p>
               </div>
             </div>
             <div className="admin-data-body">
               <div className="right-body">
-                <FormControl disabled value='محمد'/>
-                <FormControl disabled value='رحمانی'/>
-                <FormControl disabled value='مذکر'/>
+                <FormControl disabled value={mainUser.fName} />
+                <FormControl disabled value={mainUser.lName} />
+                <FormControl disabled value={mainUser.userName} />
               </div>
               <div className="left-body">
-                <FormControl disabled value='mohammadrhmany128@gmail.com'/>
-                <FormControl disabled value='apple1400'/>
-                <FormControl disabled value='admin'/>
+                <FormControl disabled value={mainUser.email} />
+                <FormControl disabled value={mainUser.password} />
+                <FormControl
+                  disabled
+                  value={mainUser.gender === "male" ? "مرد" : "زن"}
+                />
               </div>
             </div>
           </div>

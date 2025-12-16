@@ -2,10 +2,13 @@ import SideBar from "../../components/sidebar/SideBar";
 import Header from "../../components/header/Header";
 import useFetching from "../../customHooc/useFetching";
 import "./userpage.css";
-import { use } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 
 export default function UsersPage() {
+  const [users, setUsers] = useState([]);
+  const [comments, setcomments] = useState([]);
+
   const [usersData, usersError, usersLoading] = useFetching(
     `https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json`
   );
@@ -14,6 +17,22 @@ export default function UsersPage() {
     `https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json`
   );
 
+  useEffect(async () => {
+    try {
+      const userResponse = await fetch(
+        "https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json"
+      );
+      const commentsResponse = (Response = await fetch(
+        "https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json"
+      ));
+      if (commentsResponse.ok && userResponse.ok) {
+        const parsUsers = await userResponse.json();
+        const parsComments = await commentsResponse.json();
+        setUsers(Object.values(parsUsers))
+        setcomments(Object.values(parsComments))
+      }
+    } catch (error) {}
+  }, []);
   console.log(commentsData);
   return (
     <div className="users-page">
@@ -32,8 +51,8 @@ export default function UsersPage() {
             <div className="user-info">
               {usersError === true && alert(usersError)}
               {usersLoading === true && <Spinner />}
-              {usersData.length !== 0 &&
-                usersData.map((user) => (
+              {users.length !== 0 && 
+                users.map(user=>(
                   <div className="data">
                     <div className="full-name">
                       {`${user.fName} ${user.lName}`}
@@ -49,7 +68,13 @@ export default function UsersPage() {
                       </button>
                     </div>
                   </div>
-                ))}
+                ))
+              }
+
+              {/* {users[1].length !== 0 &&
+                usersData[1].map((user) => (
+                  
+                ))} */}
             </div>
           </div>
           <div className="comment-table">
@@ -57,10 +82,10 @@ export default function UsersPage() {
               <h3>کامنت ها</h3>
             </div>
             <div className="user-info">
-                {commentsError === true && alert(usersError)}
+              {commentsError === true && alert(usersError)}
               {commentsLoading === true && <Spinner />}
-              {commentsData.length !== 0 &&
-                commentsData.map((comment) => (
+              {comments.length !== 0 &&
+                comments.map((comment) => (
                   <div className="comments">
                     <div className="comments-date">
                         <div>{comment.email}</div>
