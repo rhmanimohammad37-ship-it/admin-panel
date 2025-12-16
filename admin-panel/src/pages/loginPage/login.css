@@ -1,0 +1,121 @@
+.login-page {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--body-color);
+  display: flex;
+  justify-content: center;
+}
+.form-page {
+  width: 50%;
+  height: 100%;
+  /* background-color: gray; */
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.inputs {
+  width: 70%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 5px;
+  background-color: var(--eleman-color);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid rgb(220, 220, 220);
+}
+.input {
+  background-color: #fff;
+}
+.radio-buttons {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+}
+.btn-parent {
+  width: 100%;
+  height: 50%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.send-data-btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--active-link);
+  color: var(--active-text);
+}
+.login-page-image {
+  width: 50%;
+  height: 100%;
+  /* background-color: blue;  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-image {
+  width: 70%;
+  height: 95%;
+  background-color: gray;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.login-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.status-toast{
+  width: 25%;
+  height: 15%;
+  background-color: var(--eleman-color);
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgb(182, 182, 182);
+  overflow: hidden;
+  transition: all 0.5s;
+  /* transform: translateX(-25px); */
+  visibility: hidden;
+  opacity: 0;
+}
+.toast-icon{
+  width: 20%;
+  height: 100%;
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toast-tex{
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.show-toast {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(10px);
+
+}
+
+
+@media (max-width: 992px) {
+  .form-page {
+    width: 100%;
+  }
+  .login-page-image {
+    display: none;
+  }
+}

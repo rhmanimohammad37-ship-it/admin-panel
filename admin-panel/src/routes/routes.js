@@ -1,11 +1,15 @@
 import Home from "../pages/home/home";
 import Profile from "../pages/profile-page/profile";
-import UsersPage from '../pages/users/usersPage'
+import UsersPage from "../pages/users/usersPage";
+import useLocalstoeage from "../customHooc/localstoeage";
+import Login from "../pages/loginPage/login";
+
+let isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
 const urls = [
   {
     path: "/",
-    element: <Home />,
+    element: isLogin ? <Home /> : <Login />,
   },
   {
     path: "/profile",

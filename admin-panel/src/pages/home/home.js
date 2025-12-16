@@ -1,11 +1,12 @@
-import "./home.css";
-import SideBar from "../../components/sidebar/SideBar";
-import Header from "../../components/header/Header";
-import Card from "../../components/card/card";
 import LineChartComponent from "../../components/lineChart/LineChart";
 import BarChartComponent from "../../components/bar-chart/barChart";
-import { Spinner, Table } from "react-bootstrap";
+import SideBar from "../../components/sidebar/SideBar";
 import useFetching from "../../customHooc/useFetching";
+import Header from "../../components/header/Header";
+import { Spinner, Table } from "react-bootstrap";
+import Card from "../../components/card/card";
+import { useEffect, useLayoutEffect, useState } from "react";
+import "./home.css";
 
 export default function Home() {
   const cardArrauInfo = [
@@ -41,9 +42,14 @@ export default function Home() {
   const [commentData, commentError, commentLoading] = useFetching(
     "https://admin-panel-d45dd-default-rtdb.firebaseio.com/comments.json"
   );
-  const [userData, userError, userLoading] = useFetching(
+  const [userInfo, userError, userLoading] = useFetching(
     "https://admin-panel-d45dd-default-rtdb.firebaseio.com/users.json"
   );
+  const [usersData, setusersData] = useState(userInfo);
+  useEffect(() => {
+    // userInfo.entries()
+    setusersData(Object.entries(userInfo));
+  }, [userInfo]);
 
   return (
     <div className="home">
@@ -82,12 +88,12 @@ export default function Home() {
               <tbody className="table-body">
                 {userLoading === true && <Spinner />}
                 {userError === true && alert(`${userError} in show users`)}
-                {userData.length !== 0 &&
-                  userData.map((data) => (
-                    <tr key={data.id}>
-                      <td>{data.fullName}</td>
-                      <td>{data.username}</td>
-                      <td>{data.email}</td>
+                {usersData.length !== 0 &&
+                  usersData.map((data) => (
+                    <tr key={data[1].id}>
+                      <td>{data[1].fName}</td>
+                      <td>{data[1].userName}</td>
+                      <td>{data[1].email}</td>
                     </tr>
                   ))}
               </tbody>
