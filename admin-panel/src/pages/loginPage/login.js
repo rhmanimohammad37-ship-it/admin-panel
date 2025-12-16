@@ -17,7 +17,6 @@ export default function Login() {
 
   let manRaidoBtn = useRef(null);
   let womanRaidoBtn = useRef(null);
-  const loc = useLocation();
 
   useEffect(() => {
     if (manRaidoBtn.current.checked === true) {
