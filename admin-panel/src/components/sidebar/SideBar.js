@@ -1,8 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import useLocalstoeage from "../../customHooc/localstoeage";
 import "./sidebar.css";
 
 export default function SideBar() {
+  const [setData] = useLocalstoeage()
+  const logOut = ()=>{
+    setData('isLogin' , false)
+    setData('user-key' , undefined)
+    window.location.href = '/'
+  }
+
   return (
     <div className="side-bar">
       <div className="side-bar-logo">
@@ -30,7 +38,7 @@ export default function SideBar() {
       </div>
       <div className="login">
         <h5 className="login-title">دسترسی های حساب</h5>
-        <button className="logout-btn">خروج از حساب</button>
+        <button className="logout-btn" onClick={logOut}>خروج از حساب</button>
       </div>
     </div>
   );

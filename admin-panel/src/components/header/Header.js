@@ -57,6 +57,12 @@ export default function Header() {
     setData("hasLight", lightTheme);
   }, [lightTheme, setData]);
 
+  const logOut = ()=>{
+    setData('isLogin' , false)
+    setData('user-key' , undefined)
+    window.location.href = '/'
+  }
+
   return (
     <div className="header">
       <div className="header-Breadcrumb">
@@ -118,7 +124,7 @@ export default function Header() {
               کاربران
             </NavLink>
             <h4>اطلاعات حساب</h4>
-            <button className="logout-btn">
+            <button className="logout-btn" onClick={logOut}>
               خروج از حساب
             </button>
           </div>
