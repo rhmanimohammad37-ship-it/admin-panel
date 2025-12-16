@@ -1,5 +1,6 @@
 import Home from "../pages/home/home";
 import Profile from "../pages/profile-page/profile";
+import UsersPage from '../pages/users/usersPage'
 
 const urls = [
   {
@@ -9,6 +10,10 @@ const urls = [
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/users",
+    element: <UsersPage />,
   },
 ];
 
