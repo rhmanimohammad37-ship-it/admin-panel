@@ -1,5 +1,5 @@
 import { Button, FormControl } from "react-bootstrap";
-import { useLocation, Link, NavLink , Navigate } from "react-router-dom";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import useLocalstoeage from "../../customHooc/localstoeage";
 import { useEffect, useRef, useState } from "react";
 import "./header.css";
@@ -60,7 +60,7 @@ export default function Header() {
   const logOut = ()=>{
     setData('isLogin' , false)
     setData('user-key' , undefined)
-    Navigate('/')
+    window.location.href = '/'
   }
 
   return (

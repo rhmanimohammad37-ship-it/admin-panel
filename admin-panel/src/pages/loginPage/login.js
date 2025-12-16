@@ -1,7 +1,7 @@
 import useInputhandeler from "../../customHooc/inputHandeler";
 import useLocalstoeage from "../../customHooc/localstoeage";
 import { useRef, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FormControl } from "react-bootstrap";
 import "./login.css";
 
@@ -51,7 +51,7 @@ export default function Login() {
         if (response.ok) {
           set("user-key", id);
           set("isLogin", true);
-          Navigate('/')
+          window.location.href = '/'
         }
       } catch (error) {
         alert(error);
