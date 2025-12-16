@@ -13,11 +13,11 @@ const urls = [
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: isLogin ? <Profile />: <Login/>,
   },
   {
     path: "/users",
-    element: <UsersPage />,
+    element: isLogin ? <UsersPage />: <Login/,
   },
 ];
 
