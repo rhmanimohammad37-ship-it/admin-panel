@@ -17,7 +17,7 @@ const urls = [
   },
   {
     path: "/users",
-    element: isLogin ? <UsersPage />: <Login/,
+    element: isLogin ? <UsersPage />: <Login/>,
   },
 ];
 
